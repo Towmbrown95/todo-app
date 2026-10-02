@@ -1,5 +1,9 @@
-   # To-Do App
-   A simple command-line to-do list written in Python.
+# To-Do App
+A simple command-line to-do list written in Python.
 
-   ## Run it
-   python3 app.py
+Tasks are saved to `tasks.json`, so they persist between runs.
+
+## Run it
+```
+python3 app.py
+```
