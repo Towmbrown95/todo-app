@@ -140,3 +140,40 @@ li.done span {
 }
 
 .empty { text-align: center; padding: 24px 0; }
+
+h2 {
+  font-size: 20px;
+  margin: 40px 0 0;
+}
+
+h2 + .count { margin: 2px 0 16px; }
+
+.week {
+  display: grid;
+  gap: 16px;
+}
+
+.day h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.day.today h3 { color: var(--accent); }
+
+.day.today ul { border-color: var(--accent); }
+
+.badge {
+  padding: 1px 8px;
+  font-size: 11px;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 999px;
+  letter-spacing: 0;
+}

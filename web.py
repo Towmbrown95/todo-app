@@ -1,13 +1,36 @@
+from datetime import date
+
 from flask import Flask, redirect, render_template, request, url_for
 
-from storage import load_tasks, save_tasks
+from storage import DAYS, load_chore_status, load_chores, load_tasks, save_chore_status, save_tasks
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def index():
-    return render_template("index.html", tasks=load_tasks())
+    chores = load_chores()
+    status = load_chore_status()
+    return render_template(
+        "index.html",
+        tasks=load_tasks(),
+        chores=chores,
+        chores_done=set(status["done"]),
+        chore_total=sum(len(c) for c in chores.values()),
+        today=DAYS[date.today().weekday()],
+    )
+
+
+@app.route("/chores/toggle", methods=["POST"])
+def toggle_chore():
+    key = f"{request.form['day']}|{request.form['chore']}"
+    status = load_chore_status()
+    if key in status["done"]:
+        status["done"].remove(key)
+    else:
+        status["done"].append(key)
+    save_chore_status(status)
+    return redirect(url_for("index"))
 
 
 @app.route("/add", methods=["POST"])

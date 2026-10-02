@@ -1,0 +1,9 @@
+{
+  "Monday": ["Take out trash & recycling"],
+  "Tuesday": ["Do laundry"],
+  "Wednesday": ["Vacuum living areas"],
+  "Thursday": ["Clean bathroom"],
+  "Friday": ["Wipe kitchen counters & stove"],
+  "Saturday": ["Change bed sheets", "Dust surfaces"],
+  "Sunday": ["Water plants", "Meal prep for the week"]
+}

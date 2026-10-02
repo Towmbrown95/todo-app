@@ -36,6 +36,31 @@
     {% else %}
       <p class="empty">No tasks yet. Add one above.</p>
     {% endif %}
+
+    <h2>Weekly chores</h2>
+    <p class="count">{{ chores_done|length }} of {{ chore_total }} done this week &middot; resets every Monday</p>
+    <div class="week">
+      {% for day, day_chores in chores.items() if day_chores %}
+        <section class="day {{ 'today' if day == today }}">
+          <h3>{{ day }}{% if day == today %} <span class="badge">Today</span>{% endif %}</h3>
+          <ul>
+            {% for chore in day_chores %}
+              {% set done = (day ~ '|' ~ chore) in chores_done %}
+              <li class="{{ 'done' if done }}">
+                <form class="toggle" action="{{ url_for('toggle_chore') }}" method="post">
+                  <input type="hidden" name="day" value="{{ day }}">
+                  <input type="hidden" name="chore" value="{{ chore }}">
+                  <label>
+                    <input type="checkbox" onchange="this.form.submit()" {{ 'checked' if done }}>
+                    <span>{{ chore }}</span>
+                  </label>
+                </form>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endfor %}
+    </div>
   </main>
 </body>
 </html>
