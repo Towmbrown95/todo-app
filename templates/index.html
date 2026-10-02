@@ -18,15 +18,21 @@
     {% if tasks %}
       <ul>
         {% for task in tasks %}
-          <li>
-            <span>{{ task }}</span>
+          <li class="{{ 'done' if task.done }}">
+            <form class="toggle" action="{{ url_for('toggle', index=loop.index0) }}" method="post">
+              <label>
+                <input type="checkbox" onchange="this.form.submit()" {{ 'checked' if task.done }}>
+                <span>{{ task.text }}</span>
+              </label>
+            </form>
             <form action="{{ url_for('remove', index=loop.index0) }}" method="post">
-              <button class="remove" type="submit" aria-label="Remove {{ task }}">&times;</button>
+              <button class="remove" type="submit" aria-label="Remove {{ task.text }}">&times;</button>
             </form>
           </li>
         {% endfor %}
       </ul>
-      <p class="count">{{ tasks|length }} task{{ '' if tasks|length == 1 else 's' }}</p>
+      {% set done_count = tasks|selectattr('done')|list|length %}
+      <p class="count">{{ done_count }} of {{ tasks|length }} done</p>
     {% else %}
       <p class="empty">No tasks yet. Add one above.</p>
     {% endif %}

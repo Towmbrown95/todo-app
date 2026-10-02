@@ -12,10 +12,19 @@ def index():
 
 @app.route("/add", methods=["POST"])
 def add():
-    task = request.form.get("task", "").strip()
-    if task:
+    text = request.form.get("task", "").strip()
+    if text:
         tasks = load_tasks()
-        tasks.append(task)
+        tasks.append({"text": text, "done": False})
+        save_tasks(tasks)
+    return redirect(url_for("index"))
+
+
+@app.route("/toggle/<int:index>", methods=["POST"])
+def toggle(index):
+    tasks = load_tasks()
+    if 0 <= index < len(tasks):
+        tasks[index]["done"] = not tasks[index]["done"]
         save_tasks(tasks)
     return redirect(url_for("index"))
 
