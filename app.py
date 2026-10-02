@@ -1,22 +1,4 @@
-import json
-from pathlib import Path
-
-TASKS_FILE = Path(__file__).parent / "tasks.json"
-
-
-def load_tasks():
-    if not TASKS_FILE.exists():
-        return []
-    try:
-        return json.loads(TASKS_FILE.read_text())
-    except json.JSONDecodeError:
-        print("Warning: tasks.json is corrupted, starting with an empty list.")
-        return []
-
-
-def save_tasks():
-    TASKS_FILE.write_text(json.dumps(tasks, indent=2))
-
+from storage import load_tasks, save_tasks
 
 tasks = load_tasks()
 
@@ -34,7 +16,7 @@ while True:
         task = input("Task: ").strip()
         if task:
             tasks.append(task)
-            save_tasks()
+            save_tasks(tasks)
         else:
             print("Task can't be empty.")
     elif choice == "2":
@@ -44,7 +26,7 @@ while True:
         num = input("Number to remove: ")
         if num.isdigit() and 1 <= int(num) <= len(tasks):
             print(f"Removed: {tasks.pop(int(num) - 1)}")
-            save_tasks()
+            save_tasks(tasks)
         else:
             print("Invalid number.")
     elif choice == "4":
